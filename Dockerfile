@@ -1,8 +1,8 @@
 FROM python:3.10-slim
 
-ENV TRANSFORMERS_CACHE=/app/hf_cache
-ENV HF_HOME=/app/hf_cache
-ENV XDG_CACHE_HOME=/app/hf_cache
+ENV HF_HOME=/data/hf_home
+ENV XDG_CACHE_HOME=/data/cache
+
 WORKDIR /app
 
 COPY requirements.txt .
@@ -10,5 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./app /app
 
-EXPOSE 7860
+# Create writable cache dirs
+RUN mkdir -p /data/hf_home && chmod -R 777 /data
+
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]

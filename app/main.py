@@ -3,6 +3,7 @@ from bark_utils import generate_bark_audio
 from video_utils import generate_video_clip
 from merge_utils import merge_audio_video
 import os
+os.makedirs("/data/hf_home", exist_ok=True)
 
 app = FastAPI()
 
