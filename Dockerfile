@@ -1,5 +1,8 @@
 FROM python:3.10-slim
 
+ENV TRANSFORMERS_CACHE=/app/hf_cache
+ENV HF_HOME=/app/hf_cache
+ENV XDG_CACHE_HOME=/app/hf_cache
 WORKDIR /app
 
 COPY requirements.txt .
