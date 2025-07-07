@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Body
-from app.bark_utils import generate_bark_audio
-from app.video_utils import generate_video_clip
-from app.merge_utils import merge_audio_video
+from bark_utils import generate_bark_audio
+from video_utils import generate_video_clip
+from merge_utils import merge_audio_video
 import os
 
 app = FastAPI()
