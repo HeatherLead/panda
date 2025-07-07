@@ -9,5 +9,6 @@ numpy
 ffmpeg-python
 scipy
 requests
+addict
 
 
