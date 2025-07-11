@@ -11,3 +11,4 @@ requests
 addict
 modelscope==1.9.3
 datasets==2.13.0
+opencv-python
