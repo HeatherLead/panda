@@ -29,4 +29,4 @@ def generate_youtube_short(script: str = Body(...)):
 
     final_video_path = merge_audio_video(video_paths, audio_paths)
     return {"video_url": final_video_path}
-#added opencv-python to requirements.txt
+#added obug fix sht to requirements.txt
