@@ -3,6 +3,10 @@ FROM python:3.10-slim
 # Set environment variables for cache location
 ENV HF_HOME=/data/hf_home
 ENV XDG_CACHE_HOME=/data/cache
+ENV MODELSCOPE_CACHE=/data/modelscope_cache
+
+# Ensure writable cache dirs
+RUN mkdir -p /data/hf_home /data/cache /data/modelscope_cache && chmod -R 777 /data
 
 WORKDIR /app
 
