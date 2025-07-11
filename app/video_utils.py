@@ -1,8 +1,7 @@
 from modelscope.pipelines import pipeline
-from modelscope.models import Model
 import os
 
-video_pipe = pipeline('text-to-video-synthesis', model='damo-vilab/modelscope-text-to-video-synthesis')
+video_pipe = pipeline('text-to-video-synthesis', model='weights')
 
 def generate_video_clip(text, index):
     output_path = video_pipe({'text': text})['output_video']
