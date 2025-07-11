@@ -4,7 +4,7 @@ import scipy.io.wavfile
 import os
 
 processor = AutoProcessor.from_pretrained("suno/bark")
-model = BarkModel.from_pretrained("suno/bark").to("cuda" if torch.cuda.is_available() else "cpu")
+model = BarkModel.from_pretrained("suno/bark").to("cpu")
 
 def generate_bark_audio(text, index):
     inputs = processor(text, return_tensors="pt").to(model.device)
