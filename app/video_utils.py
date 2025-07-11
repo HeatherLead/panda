@@ -3,22 +3,25 @@ from modelscope.utils.constant import Tasks
 from modelscope.models.multi_modal import TextToVideoSynthesis
 import torch
 import os
+import pytorch_lightning.callbacks.model_checkpoint
 
-import sys
-import builtins
+# Patch: allow loading Lightning callbacks
+torch.serialization.add_safe_globals([pytorch_lightning.callbacks.model_checkpoint.ModelCheckpoint])
 
-# Monkey-patch torch.load to force CPU mapping globally
+# Patch: force CPU for all model weights
 _real_torch_load = torch.load
 def _torch_load_cpu(*args, **kwargs):
-    if "map_location" not in kwargs:
-        kwargs["map_location"] = torch.device("cpu")
+    kwargs.setdefault("map_location", torch.device("cpu"))
     return _real_torch_load(*args, **kwargs)
 torch.load = _torch_load_cpu
 
-# Load the model manually with map_location enforced
+# Load model
 model = TextToVideoSynthesis.from_pretrained("weights")
 
-# Build pipeline with the loaded model
+# Restore torch.load if needed
+# torch.load = _real_torch_load
+
+# Build pipeline
 video_pipe = pipeline(task=Tasks.text_to_video_synthesis, model=model)
 
 def generate_video_clip(text, index):
