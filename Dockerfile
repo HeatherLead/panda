@@ -10,6 +10,9 @@ RUN mkdir -p /data/hf_home /data/cache /data/modelscope_cache && chmod -R 777 /d
 
 WORKDIR /app
 
+# Install system dependencies
+RUN apt-get update && apt-get install -y libgl1
+
 # Install Python deps
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
