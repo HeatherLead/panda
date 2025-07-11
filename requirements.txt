@@ -13,3 +13,6 @@ modelscope==1.9.3
 datasets==2.13.0
 opencv-python
 huggingface_hub
+fasttext
+open_clip_torch
+pytorch-lightning
