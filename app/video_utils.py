@@ -4,16 +4,21 @@ from modelscope.models.multi_modal import TextToVideoSynthesis
 import torch
 import os
 
-# Manually load the model with CPU mapping
-model = TextToVideoSynthesis.from_pretrained(
-    "weights",
-    device_map="cpu",
-    torch_dtype=torch.float32,
-    revision=None,
-    map_location=torch.device("cpu")
-)
+import sys
+import builtins
 
-# Now build the pipeline
+# Monkey-patch torch.load to force CPU mapping globally
+_real_torch_load = torch.load
+def _torch_load_cpu(*args, **kwargs):
+    if "map_location" not in kwargs:
+        kwargs["map_location"] = torch.device("cpu")
+    return _real_torch_load(*args, **kwargs)
+torch.load = _torch_load_cpu
+
+# Load the model manually with map_location enforced
+model = TextToVideoSynthesis.from_pretrained("weights")
+
+# Build pipeline with the loaded model
 video_pipe = pipeline(task=Tasks.text_to_video_synthesis, model=model)
 
 def generate_video_clip(text, index):
